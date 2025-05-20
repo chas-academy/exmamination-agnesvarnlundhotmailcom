@@ -6,6 +6,8 @@ const expenseBtn = document.getElementById("expenseBtn")
 const incomeList = document.getElementById("incomeList")
 const expenseList = document.getElementById("expenseList")
 const balance = document.getElementById("balance")
+const totalIncomeEl = document.getElementById("totalIncome")
+const totalExpensesEl = document.getElementById("totalExpenses")
 
 // Listor för inkomster och utgifter
 let income = []
@@ -73,24 +75,25 @@ function showExpenses() {
 function updateBalance() {
     let totalIncome = 0
     let totalExpenses = 0
-
+  
     income.forEach((item) => {
-        const parts = item.split("+")
-        const number = parts[1].replace(" kr", "")
-        totalIncome += Number(number)
+      const belopp = item.split("+")[1].replace(" kr", "")
+      totalIncome += Number(belopp)
     })
-
+  
     expenses.forEach((item) => {
-       
-        const parts = item.split("-")
-        const number = parts[1].replace(" kr", "")
-        totalExpenses += Number(number)
+      const belopp = item.split("-")[1].replace(" kr", "")
+      totalExpenses += Number(belopp)
     })
-
+  
     const saldo = totalIncome - totalExpenses
+  
+    // Uppdatera HTML
     balance.textContent = saldo
-}
-
+    totalIncomeEl.textContent = totalIncome
+    totalExpensesEl.textContent = totalExpenses
+  }
+  
 // Knappar
 incomeBtn.addEventListener("click", () =>{
     addIncome()
