@@ -11,14 +11,15 @@ let income = []
 let expenses = []
 
 function addTransaction(type) {
-  const text = desc.value
-  const money = amount.value
+  
+const text = desc.value
+const money = amount.value
 
-  if (text === "" || money === "") {
-    return
-  }
+if (text === "" || money === "") {
+return
+}
 
-  const transaction = {
+const transaction = {
     description: text,
     amount: Number(money),
     type: type,
@@ -39,22 +40,23 @@ function addTransaction(type) {
 }
 
 function showIncome() {
-  incomeList.innerHTML = ""
-  income.forEach((item) => {
-    const li = document.createElement("li")
-    li.textContent = item.description + ": +" + item.amount + " kr"
-    incomeList.appendChild(li)
-  })
-}
+
+incomeList.innerHTML = ""
+income.forEach((item) => {
+      const li = document.createElement("li")
+      li.textContent = `${item.description} + ${item.amount} kr`
+      incomeList.appendChild(li)
+    })
+  }
 
 function showExpenses() {
-  expenseList.innerHTML = ""
-  expenses.forEach((item) => {
-    const li = document.createElement("li")
-    li.textContent = item.description + ": -" + item.amount + " kr"
-    expenseList.appendChild(li)
-  })
-}
+    expenseList.innerHTML = ""
+    expenses.forEach((item) => {
+      const li = document.createElement("li")
+      li.textContent = `${item.description} - ${item.amount} kr`
+      expenseList.appendChild(li)
+    })
+  }
 
 function updateBalance() {
   let totalIncome = 0
