@@ -6,8 +6,6 @@ const expenseBtn = document.getElementById("expenseBtn")
 const incomeList = document.getElementById("incomeList")
 const expenseList = document.getElementById("expenseList")
 const balance = document.getElementById("balance")
-const totalIncomeEl = document.getElementById("totalIncome")
-const totalExpensesEl = document.getElementById("totalExpenses")
 
 // Listor för inkomster och utgifter
 let income = []
@@ -23,7 +21,7 @@ if (text === "" || money === ""){
     return
 }
 
-income.push(text + ": +" + money + " kr")
+income.push({ text: text, amount: Number(money) })
 showIncome()
 
 desc.value = ""
@@ -42,7 +40,7 @@ if (text === "" || money === "") {
     return
 }
 
-expenses.push(text + ": -" + money + " kr")
+expenses.push({ text: text, amount: Number(money) })
 showExpenses()
 
 desc.value = ""
@@ -56,7 +54,7 @@ function showIncome() {
     incomeList.innerHTML = ""
     income.forEach((item) => {
         const li = document.createElement("li")
-        li.textContent = item
+        li.textContent = item.text + ": +" + item.amount + " kr"
         incomeList.appendChild(li)
     })
 }
@@ -66,7 +64,7 @@ function showExpenses() {
     expenseList.innerHTML = ""
     expenses.forEach((item) => {
         const li = document.createElement("li")
-        li.textContent = item
+        li.textContent = item.text + ": -" + item.amount + " kr"
         expenseList.appendChild(li)
     })
 }
@@ -75,25 +73,19 @@ function showExpenses() {
 function updateBalance() {
     let totalIncome = 0
     let totalExpenses = 0
-  
+
     income.forEach((item) => {
-      const belopp = item.split("+")[1].replace(" kr", "")
-      totalIncome += Number(belopp)
+        totalIncome += item.amount
     })
-  
+
     expenses.forEach((item) => {
-      const belopp = item.split("-")[1].replace(" kr", "")
-      totalExpenses += Number(belopp)
+        totalExpenses += item.amount
     })
-  
+
     const saldo = totalIncome - totalExpenses
-  
-    // Uppdatera HTML
-    balance.textContent = saldo
-    totalIncomeEl.textContent = totalIncome
-    totalExpensesEl.textContent = totalExpenses
-  }
-  
+    balance.textContent = saldo + " kr"
+}
+
 // Knappar
 incomeBtn.addEventListener("click", () =>{
     addIncome()
