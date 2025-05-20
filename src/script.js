@@ -5,6 +5,7 @@ const incomeBtn = document.getElementById("incomeBtn")
 const expenseBtn = document.getElementById("expenseBtn")
 const incomeList = document.getElementById("incomeList")
 const expenseList = document.getElementById("expenseList")
+const balance = document.getElementById("balance")
 
 // Listor för inkomster och utgifter
 let income = []
