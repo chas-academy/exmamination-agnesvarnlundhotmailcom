@@ -69,7 +69,7 @@ function updateBalance() {
   })
 
   const saldo = totalIncome - totalExpenses
-  balance.textContent = saldo + " kr"
+  balance.textContent = saldo 
 }
 
 incomeBtn.addEventListener("click", () => {
