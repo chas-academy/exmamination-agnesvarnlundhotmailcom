@@ -1,4 +1,4 @@
-// Hämta element från HTML
+
 const desc = document.getElementById("desc")
 const amount = document.getElementById("amount")
 const incomeBtn = document.getElementById("incomeBtn")
@@ -6,70 +6,56 @@ const expenseBtn = document.getElementById("expenseBtn")
 const incomeList = document.getElementById("incomeList")
 const expenseList = document.getElementById("expenseList")
 const balance = document.getElementById("balance")
-
-// Listor för inkomster och utgifter
+ 
 let income = []
 let expenses = []
 
-// Lägga till inkomster
-function addIncome() {   
+function addTransaction(type) {
   const text = desc.value
   const money = amount.value
-  const isValid = text !== "" && money !== "" && Number(money) > 0
 
-  if (!isValid) {
-    alert("")
+  if (text === "" || money === "") {
     return
   }
 
-  income.push({ text: text, amount: Number(money), type: "" })
-  showIncome()
-
-  desc.value = ""
-  amount.value = ""
-  updateBalance()
-}
-
-// Lägga till utgifter
-function addExpense() {    
-  const text = desc.value
-  const money = amount.value
-  const isValid = text !== "" && money !== "" && Number(money) > 0
-
-  if (!isValid) {
-    alert("")
-    return
+  const transaction = {
+    description: text,
+    amount: Number(money),
+    type: type,
   }
 
-  expenses.push({ text: text, amount: Number(money), type: "" })
-  showExpenses()
+  if (type === "income") {
+    income.push(transaction)
+    showIncome()
+  } else if (type === "expense") {
+    expenses.push(transaction)
+    showExpenses()
+  }
 
   desc.value = ""
   amount.value = ""
+
   updateBalance()
 }
 
-// Visa inkomster
 function showIncome() {
   incomeList.innerHTML = ""
   income.forEach((item) => {
     const li = document.createElement("li")
-    li.textContent = item.text + ": +" + item.amount + " kr"
+    li.textContent = item.description + ": +" + item.amount + " kr"
     incomeList.appendChild(li)
   })
 }
 
-// Visa utgifter
 function showExpenses() {
   expenseList.innerHTML = ""
   expenses.forEach((item) => {
     const li = document.createElement("li")
-    li.textContent = item.text + ": -" + item.amount + " kr"
+    li.textContent = item.description + ": -" + item.amount + " kr"
     expenseList.appendChild(li)
   })
 }
 
-// Uppdatera saldot
 function updateBalance() {
   let totalIncome = 0
   let totalExpenses = 0
@@ -86,11 +72,10 @@ function updateBalance() {
   balance.textContent = saldo + " kr"
 }
 
-// Knappar
 incomeBtn.addEventListener("click", () => {
-  addIncome()
+  addTransaction("income")
 })
 
 expenseBtn.addEventListener("click", () => {
-  addExpense()
+  addTransaction("expense")
 })
